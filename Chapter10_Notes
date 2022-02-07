@@ -1,0 +1,129 @@
+
+Chapter 10 - Introducing JavaFX
+
+// The JavaFX files (created using Maven) will not work in Eclipse unless the required
+dependencies have been downloaded and implemented.
+// Some of the example code provided by the textbook does not feature code necessary for the
+program to run. This has been highlighted within the programs themselves.
+
+------------------------------------------------------------------------
+
+Learning Outcomes:
+
+• briefly describe the history of graphics programming in Java;
+• explain the structure and life cycle of a JavaFX application;
+• produce 2D graphical shapes in JavaFX;
+• build an interactive graphics application in JavaFX using common components
+  such as buttons, textﬁelds and labels;
+• program a JavaFX control to listen for events using a lambda expression;
+• make use of a variety of different JavaFX containers;
+• create borders, fonts and colours;
+• format decimal numbers so that they appear in an appropriate form in a
+  graphics application.
+
+------------------------------------------------------------------------
+
+10.1 Introduction
+
+JavaFX is not so commonly used anymore (2022), though interestingly NASA still uses it for their
+virtualisations. Hence I have struggled to get JavaFX up and running on Eclipse, the IDE I have been
+using throughout Chapters 1 - 9, and due to dependency issues have had to fall on IntelliJ's Maven
+build tool to continue with this Chapter. This has been a learning curve in itself!
+
+Apache Maven is a build automation tool used primarily for Java, but it can also be used to build
+and manage projects in other languages.
+
+So, with this new development we return to the book and continue our Java In Two Semesters journey.
+
+In our previous programs, we have been writing programs that simply output text the the console.
+JavaFX builds GUIs (graphical user interfaces) that enhance the user experience. We are able to
+build windows featuring buttons and graphics, making our programs look like real-world applications.
+
+JavaFX is a Java graphics package and though is now mostly outdated, especially in web dev, is still
+used in desktop applications. It used to be distributed with the JDK (Java Development Kit) but as
+of 2018 is now a separate module. Support will stop this year, in 2022, but we'll blast through this
+chapter and see what we can learn.
+
+------------------------------------------------------------------------
+
+10.2 A Brief History of Java Graphics
+
+Graphical programming was first achieved in Java using the AWT package (Abstract Window Toolkit).
+This provided an extension to the operating system, so whatever you built in your program, such as
+a button, would look like a button supplied by the native operating system. This made the user
+experience stylistically consistent, but uses a lot of resources. Components that rely on the
+native OS and use up a lot of their resources are known as heavyweight components.
+
+Due to it's heavyweight nature, AWT was not successful for two reasons; it used a lot of resources,
+and there were functional differences between OSs (eg, Windows and Mac). As a result, it was
+replaced with Swing, from 2000 - 2014. Swing was much more lightweight, but did not make components
+look the same as the operating system. It too became outdated, but this was due to look-and-feel rather
+that the functional demise of AWT. Swing was replaced with JavaFX in 2014 with the release of Java 8.
+(As of today, 7 Feb 2022, we are on Java 17).
+
+------------------------------------------------------------------------
+
+10.3 JavaFX: An Overview
+
+JavaFX programs are known as applications.
+As a result, we need to extend the Application class so we can make use of its attributes & methods.
+
+We do this by importing the Application class with this statement:
+
+    import javafx.application.Application;
+
+We initialise a JavaFX application with the following three methods:
+
+    void init()     Any code that needs to run before the app starts is placed here.
+
+    abstract void start(Stage stage)
+                    This is where our application code is placed.
+
+    void stop()     Code executed after the app has finished is placed here.
+
+There's a lot of new terminology to learn with JavaFX, so a glossary is provided below:
+
+    stage           the top level window where the application runs
+                    if the app is run in full screen, the screen becomes the stage
+                    if the app is run within a browser, the browser window is the stage
+
+    scene           the contents of the stage
+
+    scene graphic   another word for scene
+
+    nodes           items that make up the scene, these can be individual buttons, text fields etc, but
+                    also containers that feature other nodes.
+
+    controls        collective name for nodes (interactive elements) eg buttons, text fields, labels
+
+    container       component that holds nodes, and can arrange them in a particular way.
+                    Containers can contain other containers.
+
+    root            a single top level node. All other nodes will be derived from this.
+
+    parent          a container holding containers (the children)
+
+    children        a container inside a container (the parent)
+
+    SYNTAX
+
+    VBox            a container that arranges child nodes vertically
+
+    HBox            a container that arranges child nodes horizontally
+
+To launch a JavaFX application, we only need a main method if we are running the program from
+within an IDE, as we will be doing:
+
+    public static void main(String[] args)
+    {
+        // calls the launch method, and passes any arguments received by the main method
+        // is a static method, and so can launch our app from another program
+        launch(args);
+    }
+
+You can launch a JavaFX application without a main method by:
+    - running the program from the command line
+    - deploying the app as a .jar file
+
+
+
