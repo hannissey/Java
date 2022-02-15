@@ -1,0 +1,31 @@
+
+Chapter 10 Introducing JavaFX
+Self-Test Questions
+
+1. Briefly describe the history of graphics programming in Java.
+
+Java's initial way of programming graphics was AWT - Abstract Window Tool.
+It wasn't very successful however because it was a heavyweight tool that relied on the OS to
+style the graphics. It was replaced by Swing in 2000, which in turn was replaced with JavaFX with the
+release of Java8 in 2014.
+
+2. What is the name of the three methods that are called when a JavaFX application
+is launched? what is the purpose of each?
+
+    void init()                         This runs any code that has to run before the application.
+
+    abstract void start(Stage stage)    This runs the application.
+
+    void stop()                         This runs code required to run after the application.
+
+3. Which containers have been used in the following two scene graphics?
+    (a) GridPane
+    (b) StackPane
+
+4. Describe how the following containers lay out the nodes that they contain:
+    (a) a VBox          This lays out nodes vertically.
+    (b) an HBox         This lays out nodes horizontally.
+    (e) a FlowPane      This arranges nodes in a row. It is responsive, and changes with window resizing.
+    (f) a BorderPane    This creates 5 'regions' within the window where nodes can be placed.
+    (c) a GridPane      This arranges nodes in a grid, using rows and columns.
+    (d) a StackPane     This 'stacks' nodes one on top of the other.

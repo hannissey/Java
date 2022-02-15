@@ -78,6 +78,7 @@ We initialise a JavaFX application with the following three methods:
 
     abstract void start(Stage stage)
                     This is where our application code is placed.
+                    It is an abstract method that needs to be coded.
 
     void stop()     Code executed after the app has finished is placed here.
 
@@ -111,6 +112,13 @@ There's a lot of new terminology to learn with JavaFX, so a glossary is provided
 
     HBox            a container that arranges child nodes horizontally
 
+JavaFX applications are a hierarchy of containers. So, when the application runs there will be the
+Stage which is the dialogue box/window itself. Within this dialogue box is the scene. Within the
+scene there is the parent container, with any nodes or other containers which will then contain
+other nodes. Similar to fashioning a website from HTML, there is a structural hierarchy that
+needs to be followed.
+
+
 To launch a JavaFX application, we only need a main method if we are running the program from
 within an IDE, as we will be doing:
 
@@ -125,5 +133,170 @@ You can launch a JavaFX application without a main method by:
     - running the program from the command line
     - deploying the app as a .jar file
 
+------------------------------------------------------------------------
 
+10.4 2D Graphics: The SmileyFace Class
+
+See SmileyFace.java for a demonstration.
+
+As you can see, we need to import various classes from the javafx package.
+These will enable us to create our scene, draw shapes, and modify our colours and text.
+All JavaFX programs run as an application, which requires us to extend the Application class:
+
+    javafx.application.Application
+    ...
+    public class SmileyFace extends Application
+
+We then call the start method, which sends a Stage class object:
+
+    public void start(Stage stage)
+
+This is our main container for the graphic.
+
+Now, we draw our Smiley Face by calling methods from the Shape libraries. These take a variety
+of parameters, and it's worth experimenting with these to see what they do.
+You can also call methods like setFill to colour your shapes, and there is an extensive library
+of colours available.
+
+Drawing an arc can be complicated, as the method parameters look like this:
+
+    Arc(double centreX, double centreY, double radiusX, double radiusY,
+    double startAngle, double length)
+
+Don't worry about remembering all these parameters, as the IDE will remind you what is required.
+You can also look it up in the JavaFX docs on the Oracle website
+https://docs.oracle.com/javase/8/javafx/api/javafx/scene/shape/Arc.html
+
+Here's our code from the application itself, which draws a curve (our smile).
+
+    Arc mouth = new Arc(125,150,45,35,0,-180);
+
+The majority of the parameters request placement info, so it knows where to place your graphics.
+The numbers act as coordinates and sizing info so your graphic can be drawn accurately.
+
+We use the Group class to create a group object in which we can place our items.
+It acts as an invisible container, and the syntax is as follows:
+
+    Group root = new Group(face, rightEye,leftEye, mouth, caption);
+
+As per naming conventions, the first node is called the root node, so our Group is named accordingly.
+This Group object is then passed to the Scene constructor to enable us to create our scene:
+
+    Scene scene = new Scene(root, 250.0D, 275.0D, Color.ANTIQUEWHITE);
+
+As with any theatrical production, we need to set our scene, create a title, and then show:
+
+    stage.setScene(scene);
+    stage.setTitle("Smiley Face");
+    stage.show();
+
+and all is ready to go, with launch(args); in the main method.
+
+------------------------------------------------------------------------
+
+10.5 Event Handling in JavaFX: The ChangingFace class
+
+Our SmileyFace class did not require any interaction from the user. In our ChangingFace.java
+application, we present buttons that when pressed, will change the graphic.
+
+Glossary of terms used:
+
+Event object        an object that belongs to the Event class, ie a type of event like ActionEvent
+
+ActionEvent         a mouse click Event
+
+EventHandler        adds a state of 'waiting for an event' to an item, like a mouse click
+
+handle              the variable e in the code frownButton.setOnAction(e -> mouth.setLength(180));
+
+setOnAction         a JavaFX specific method called a convenience method
+
+lambda expression   allow us to send code to a method as an argument, like sending a number
+                    to an int method, eg
+                    e - > mouth.setLength(-180)
+
+The syntax for this is below:
+
+    interactiveItem.method(ActionEvent -> modifiableItem.method(value));
+
+    frownButton.setOnAction(e -> mouth.setLength(180));
+
+Here the smile changes to a frown, simply by altering the length parameter, which was initially
+-180. Our new action is to set a new length of 180 on the mouth arc.
+
+------------------------------------------------------------------------
+
+10.8 A Graphical User Interface (GUI) for the Oblong Class
+
+In OblongGUI.java, we have create a GUI for the Oblong program we have been using to create instances
+of oblongs which take in user values and return calculations based on these values.
+
+Running the program presents a window where we can actually input these values using a dialogue
+box rather than typing them into the console.
+
+A couple of things to note about this application are:
+
+    - TextArea can be used to display text as well as for user input, for display purposes we need
+    to ensure we have sent a false value to the setEditable method.
+
+    - the code that makes the button work has a conditional statement to ensure that the user has
+    input the values. It uses the isEmpty() method for both the length and height fields.
+    If the inputs are empty an error message is returned.
+    As you can see calculateButton.setOnAction is a lambda expression utilising the use of sending code rather than a
+    parameter to the setOnAction method. We have nested the if statement inside the lambda expression
+    using curly braces.
+
+    - parseDouble is a wrapper class used to convert the String into a double.
+    We have to use getText() which returns a String, hence the need for a conversion.
+    If we wanted to convert an integer, we would use parseInt.
+    parseDouble is a method of the Double class, and parseInt is a method of the Integer class.
+
+------------------------------------------------------------------------
+
+10.9 Containers and Layouts
+
+There are several ways to structure your JavaFX application. A list is provided below:
+
+    - HBox and VBox         arranges children horizontally or vertically, respectively
+                            there are 12 different alignment positions for nodes
+    - GridPane              lays out components in a matrix of rows and columns
+    - StackPane             stacks the components on top of each other, in birds-eye view,
+                            (think z-index in css)
+    - FlowPane              arranges items in a row, in the order they were added
+                            is responsive to screen size/adjustment
+    - BorderPane            divides the stage into 5 regions: top, bottom, left, right & centre
+                            you can add nodes to each region using set, eg setBottom
+
+------------------------------------------------------------------------
+
+10.10 Borders, Fonts and Colours
+
+You can enhance your applications using stylistic features such as fonts, borders and colours.
+More info can be found here: https://docs.oracle.com/javase/8/javase-clienttechnologies.htm
+
+Here's an interesting excerpt from the textbook which explains how colour is used by computers:
+
+    "You have seen how the JavaFX Color class has a great many predeﬁned colours.
+     However we can, if we wish, create our own colours. Those of you who have studied
+     some elementary physics will know that there are three primary colours, red, green
+     and blue*; all other colours can be obtained by mixing these in different proportions.
+     Mixing red, green and blue in equal intensity produces white light; the colour we
+     know as black is in fact the absence of all three. Mixing equal amounts of red and
+     green (and no blue) produces yellow light; red and blue produce a mauvish colour
+     called magenta; and mixing blue and green produces cyan, a sort of turquoise.
+     The Color class has a method called rgb which allows us to specify the
+     intensity of each of the primary colours, red, green, blue respectively. The intensity
+     for each colour can range from a minimum of zero to a maximum of 255. So there
+     are 256 possible intensities for each primary colour, and the total number of dif-
+     ferent colours available to us is therefore 256 x 256 x 256, or 16,777,216.
+
+     * Don’t confuse this with the mixing of coloured paints, where the rules are different. In the case of
+       mixing coloured lights (as on a computer monitor) we are dealing with reflection of light—in the
+       case of paints we are dealing with absorption, so the primary colours, and the rules for mixing, are
+       different. For paints the primary colours are red, blue and yellow.
+     "
+
+------------------------------------------------------------------------
+
+10.11 Number Formatting
 
