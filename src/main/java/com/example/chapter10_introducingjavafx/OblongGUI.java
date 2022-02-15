@@ -31,8 +31,8 @@ public class OblongGUI extends Application
         // create and configure a non-editable text area to display the results
         TextArea display = new TextArea();
         display.setEditable(false);
-        display.setMinSize(210, 50);
-        display.setMaxSize(210, 50);
+        display.setMinSize(230, 50);
+        display.setMaxSize(230, 50);
 
         // create and configure Labels for the text fields
         Label lengthLabel = new Label("Length");
@@ -53,16 +53,26 @@ public class OblongGUI extends Application
                     {
                         display.setText("Length and height must be entered.");
                     }
+
                     else
                     {
                         // convert text input to doubles and set the length and height of the Oblong
-                        testOblong.setLength(Double.parseDouble(lengthField.getText()));
-                        testOblong.setHeight(Double.parseDouble(heightField.getText()));
+                        double length = Double.parseDouble(lengthField.getText());
+                        double height = Double.parseDouble(heightField.getText());
 
-                        // use the methods of Oblong to calculate the area and perimeter
-                        display.setText("The area is: " + testOblong.getArea()
-                                        + "\n" + "The perimeter is: "
-                                        + testOblong.getPerimeter());
+                        if(height == 0 || length == 0)
+                        {
+                            display.setText("Both values must be greater than zero.");
+                        } else
+                        {
+                            testOblong.setLength(length);
+                            testOblong.setHeight(height);
+
+                            // use the methods of Oblong to calculate the area and perimeter
+                            display.setText("The area is: " + testOblong.getArea()
+                                    + "\n" + "The perimeter is: "
+                                    + testOblong.getPerimeter());
+                        }
                     }
                 }
 
